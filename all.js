@@ -1,10 +1,23 @@
 let data = [ ];
 
-axios.get('https://raw.githubusercontent.com/hexschool/js-training/main/travelApi.json')
+
+// 定義一個函式來包裝 API 請求
+function fetchData(apiUrl) {
+  axios.get(apiUrl)
     .then(function(response){
         data = response.data.data;
         init();
+    })
+    .catch(error=>{
+        console.log(error.name);
+        alert("未正確取得API");
     });
+}
+
+//API URL
+const apiUrl = 'https://raw.githubusercontent.com/hexschool/js-training/main/travelApi.json';
+fetchData(apiUrl);
+
 
 const ticketCard = document.querySelector(".ticketCard-area");
 const searchResultNum = document.querySelector(".searchResultNum");
@@ -47,12 +60,12 @@ function init(){
             </div>
           </li>
         `;
-        count+=1;
+        count++;
     })
     ticketCard.innerHTML = str;
     searchResultNum.innerHTML = count;
 }
-init();
+
 
 //縣市篩選器邏輯 start -------------------------------------
 filter.addEventListener("change", function(e){
@@ -190,3 +203,6 @@ filter.addEventListener("change", function(e){
         ticketRate.value = "";
     }
 })
+
+
+init();
